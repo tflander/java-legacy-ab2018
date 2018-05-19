@@ -8,51 +8,41 @@ import java.net.URISyntaxException;
 /**
  * Job applicant class.
  */
-@Data
 public class JobApplicant {
 	
-	private String firstName = null;
-	private String middleName = null;
-	private String lastName = null;
 	private Address address = new Address();
 	private AddressProvider addressProvider = new AddressProvider();
 	private String ssn;
+	private Name name;
 
 	public void setName(String firstName, String middleName, String lastName) {
-		this.firstName = firstName == null ? "" : firstName;
-		this.middleName = middleName == null ? "" : middleName;
-		this.lastName = lastName == null ? "" : lastName;
+		name = new DefaultNameBuilder().setName(firstName, middleName, lastName);
 	}
 
 	
 	public void setSpanishName(String primerNombre, String segundoNombre,
 							   String primerApellido, String segundoApellido) {
-		this.firstName = primerNombre == null ? "" : primerNombre;
-		this.middleName = segundoNombre == null ? "" : segundoNombre;
-		if ( primerApellido != null ) {
-            this.lastName = primerApellido + (segundoApellido == null ? null : " " + segundoApellido);
-		} else {
-			this.lastName = "";
-		}
+        String lastName;
+        if ( primerApellido != null ) {
+            lastName = primerApellido + (segundoApellido == null ? null : " " + segundoApellido);
+        } else {
+            lastName = "";
+        }
+
+	    name = Name.builder()
+                .firstName(primerNombre == null ? "" : primerNombre)
+                .middleName(segundoNombre == null ? "" : segundoNombre)
+                .lastName(lastName)
+                .build();
+
 	}
 	
 	public String formatLastNameFirst() {
-		StringBuilder sb = new StringBuilder(lastName);
-		sb.append(", ");
-		sb.append(firstName);
-		if ( middleName.length() > 0 ) {
-			sb.append(" ");
-			sb.append(middleName);
-		}
-		return sb.toString();
+	    return new DefaultNameBuilder().formatLastNameFirst(name);
 	}
 	
 	public int validateName() {
-		if ( firstName.length() > 0 && lastName.length() > 0 ) {
-			return 0;
-		} else {
-			return 6;
-		}
+	    return new DefaultNameBuilder().validateName(name);
 	}
 
 	public void setSsn(String ssn) {
@@ -90,4 +80,27 @@ public class JobApplicant {
         return addressProvider.buildAddressFromZipCode(zipCode);
     }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getFirstName() {
+        return name.getFirstName();
+    }
+
+    public String getLastName() {
+        return name.getLastName();
+    }
+
+    public String getMiddleName() {
+        return name.getMiddleName();
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String getSsn() {
+        return ssn;
+    }
 }

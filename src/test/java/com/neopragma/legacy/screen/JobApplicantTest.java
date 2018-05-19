@@ -59,30 +59,6 @@ public class JobApplicantTest {
     }
 
     @Test
-    public void completeNameProvided() {
-        jobApplicant.setName("First", "Middle", "Last");
-        assertEquals(0, jobApplicant.validateName());
-    }
-
-    @Test
-    public void firstAndLastNamesProvided() {
-        jobApplicant.setName("First", null, "Last");
-        assertEquals(0, jobApplicant.validateName());
-    }
-
-    @Test
-    public void missingFirstName() {
-        jobApplicant.setName(null, null, "Last");
-        assertEquals(6, jobApplicant.validateName());
-    }
-
-    @Test
-    public void missingLastName() {
-        jobApplicant.setName("First", null, null);
-        assertEquals(6, jobApplicant.validateName());
-    }
-
-    @Test
     public void completeSpanishNameProvided() {
         jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", "PrimerApellido", "SegundoApellido");
         assertEquals(0, jobApplicant.validateName());
@@ -110,12 +86,6 @@ public class JobApplicantTest {
     public void spanishNameWithNoLastNameProvided() {
         jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", null, null);
         assertEquals(6, jobApplicant.validateName());
-    }
-
-    @Test
-    public void formatEnglishNameLastNameFirst() {
-        jobApplicant.setName("First", "Middle", "Last");
-        assertEquals("Last, First Middle", jobApplicant.formatLastNameFirst());
     }
 
     @Test
