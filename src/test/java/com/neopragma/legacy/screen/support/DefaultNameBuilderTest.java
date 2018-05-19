@@ -1,5 +1,7 @@
-package com.neopragma.legacy.screen;
+package com.neopragma.legacy.screen.support;
 
+import com.neopragma.legacy.screen.support.DefaultNameBuilder;
+import com.neopragma.legacy.screen.support.Name;
 import org.junit.Before;
 import org.junit.Test;
 

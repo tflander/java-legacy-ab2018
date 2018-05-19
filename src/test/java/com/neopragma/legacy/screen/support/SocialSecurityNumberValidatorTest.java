@@ -1,5 +1,6 @@
-package com.neopragma.legacy.screen;
+package com.neopragma.legacy.screen.support;
 
+import com.neopragma.legacy.screen.support.SocialSecurityNumberValidator;
 import org.junit.Before;
 import org.junit.Test;
 

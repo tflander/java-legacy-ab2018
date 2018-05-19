@@ -1,4 +1,4 @@
-package com.neopragma.legacy.screen;
+package com.neopragma.legacy.screen.support;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;

@@ -1,5 +1,7 @@
 package com.neopragma.legacy.screen;
 
+import com.neopragma.legacy.screen.support.*;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -57,10 +59,15 @@ public class JobApplicant {
                 ssn.substring(5);
     }
 
+    /**
+     *  * @deprecated  As of release 2.0, replaced by TODO Create Link Annotation
+
+     * @return
+     */
+    @Deprecated
     public int validateSsn() {
         return new SocialSecurityNumberValidator().validate(this.ssn);
     }
-
 
     public void setZipCode(String zipCode) throws URISyntaxException, IOException {
         this.address = addressProvider.buildAddressFromZipCode(zipCode);
@@ -85,7 +92,7 @@ public class JobApplicant {
         save();
     }
 
-    protected void save() {
+    public void save() {
         //TODO save information to a database
         System.out.println("Saving to database: " + formatLastNameFirst());
     }
@@ -103,7 +110,6 @@ public class JobApplicant {
     public static void main(String[] args) throws URISyntaxException, IOException {
         JobApplicantApp.main(args);
     }
-
 
     protected Address buildAddressFromZipCode(String zipCode) throws IOException, URISyntaxException {
         return addressProvider.buildAddressFromZipCode(zipCode);

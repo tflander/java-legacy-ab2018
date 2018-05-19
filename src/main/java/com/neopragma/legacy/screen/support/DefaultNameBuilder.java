@@ -1,4 +1,4 @@
-package com.neopragma.legacy.screen;
+package com.neopragma.legacy.screen.support;
 
 public class DefaultNameBuilder {
 

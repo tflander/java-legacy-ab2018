@@ -1,5 +1,7 @@
 package com.neopragma.legacy.screen;
 
+import com.neopragma.legacy.screen.support.Address;
+import com.neopragma.legacy.screen.support.AddressProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

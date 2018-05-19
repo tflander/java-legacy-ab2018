@@ -1,4 +1,6 @@
-package com.neopragma.legacy.screen;
+package com.neopragma.legacy.screen.support;
+
+import com.neopragma.legacy.screen.JobApplicant;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -33,10 +35,10 @@ public class JobApplicantApp {
             zipCode = scanner.nextLine();
             jobApplicant.setName(firstName, middleName, lastName);
             jobApplicant.setSsn(ssn);
-            jobApplicant.setAddress(jobApplicant.buildAddressFromZipCode(zipCode));
+            jobApplicant.setZipCode(zipCode);
             jobApplicant.save();
+
             System.out.println("saved " + jobApplicant.toString());
         }
     }
-
 }
