@@ -35,6 +35,7 @@ public class JobApplicantApp {
             jobApplicant.setSsn(ssn);
             jobApplicant.setAddress(jobApplicant.populateAddressUsingZipCode(zipCode));
             jobApplicant.save();
+            System.out.println("saved " + jobApplicant.toString());
         }
     }
 
