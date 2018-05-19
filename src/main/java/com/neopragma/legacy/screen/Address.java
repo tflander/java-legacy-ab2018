@@ -19,36 +19,38 @@ public class Address {
     private String city;
     private String state;
 
-    public void populateUsingZipCode(String zipCode) throws URISyntaxException, IOException {
-        this.zipCode = zipCode;
-        CloseableHttpResponse response = getAddressResponse();
+    public static Address populateUsingZipCode(String zipCode) throws URISyntaxException, IOException {
+        Address address = new Address();
+        address.zipCode = zipCode;
+        CloseableHttpResponse response = getAddressResponse(zipCode);
         try {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 StringBuffer result = getRawData(response);
-                parseResultAndUpdateAddress(result);
+                parseResultAndUpdateAddress(result, address);
             } else {
-                city = "";
-                state = "";
+                address.city = "";
+                address.state = "";
             }
         } finally {
             response.close();
         }
+        return address;
     }
 
-    private void parseResultAndUpdateAddress(StringBuffer result) {
+    private static void parseResultAndUpdateAddress(StringBuffer result, Address address) {
         int metaOffset = result.indexOf("<meta ");
         int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
         contentOffset += 19;
         contentOffset = result.indexOf(" - ", contentOffset);
         contentOffset += 3;
         int stateOffset = result.indexOf(" ", contentOffset);
-        city = result.substring(contentOffset, stateOffset);
+        address.city = result.substring(contentOffset, stateOffset);
         stateOffset += 1;
-        state = result.substring(stateOffset, stateOffset+2);
+        address.state = result.substring(stateOffset, stateOffset+2);
     }
 
-    private StringBuffer getRawData(CloseableHttpResponse response) throws IOException {
+    private static StringBuffer getRawData(CloseableHttpResponse response) throws IOException {
         BufferedReader rd = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
         StringBuffer result = new StringBuffer();
@@ -59,13 +61,13 @@ public class Address {
         return result;
     }
 
-    private CloseableHttpResponse getAddressResponse() throws URISyntaxException, IOException {
+    private static CloseableHttpResponse getAddressResponse(String zipCode) throws URISyntaxException, IOException {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         URI uri = new URIBuilder()
                 .setScheme("http")
                 .setHost("www.zip-codes.com")
                 .setPath("/search.asp")
-                .setParameter("fld-zip", this.zipCode)
+                .setParameter("fld-zip", zipCode)
                 .setParameter("selectTab", "0")
                 .setParameter("srch-type", "city")
                 .build();

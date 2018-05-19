@@ -110,7 +110,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		address.populateUsingZipCode(zipCode);
+		address = Address.populateUsingZipCode(zipCode);
 		save();
 	}
 	
