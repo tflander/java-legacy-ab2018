@@ -19,6 +19,7 @@ public class JobApplicant {
 		this.middleName = middleName == null ? "" : middleName;
 		this.lastName = lastName == null ? "" : lastName;
 	}
+
 	
 	public void setSpanishName(String primerNombre, String segundoNombre,
 							   String primerApellido, String segundoApellido) {
@@ -110,7 +111,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		address = Address.populateUsingZipCode(zipCode);
+		address = new AddressProvider().populateUsingZipCode(zipCode);
 		save();
 	}
 	
@@ -148,7 +149,7 @@ public class JobApplicant {
             zipCode = scanner.nextLine();			
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
-            jobApplicant.getAddress().populateUsingZipCode(zipCode);
+            jobApplicant.setAddress(new AddressProvider().populateUsingZipCode(zipCode));
             jobApplicant.save();
 		}
 	}
@@ -156,4 +157,8 @@ public class JobApplicant {
 	public Address getAddress() {
 		return address;
 	}
+
+	public void setAddress(Address address) {
+        this.address = address;
+    }
 }
