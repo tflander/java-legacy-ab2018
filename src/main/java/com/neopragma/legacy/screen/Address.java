@@ -19,7 +19,7 @@ public class Address {
     private String city;
     private String state;
 
-    public void setZipCode(String zipCode) throws URISyntaxException, IOException {
+    public void populateUsingZipCode(String zipCode) throws URISyntaxException, IOException {
         this.zipCode = zipCode;
         // Use a service to look up the city and state based on zip code.
         // Save the returned city and state if content length is greater than zero.

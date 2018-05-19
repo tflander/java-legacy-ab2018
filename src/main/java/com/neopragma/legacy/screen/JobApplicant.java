@@ -1,18 +1,8 @@
 package com.neopragma.legacy.screen;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 
 /**
  * Job applicant class.
@@ -120,7 +110,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		address.setZipCode(zipCode);
+		address.populateUsingZipCode(zipCode);
 		save();
 	}
 	
@@ -158,7 +148,7 @@ public class JobApplicant {
             zipCode = scanner.nextLine();			
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
-            jobApplicant.getAddress().setZipCode(zipCode);
+            jobApplicant.getAddress().populateUsingZipCode(zipCode);
             jobApplicant.save();
 		}
 	}

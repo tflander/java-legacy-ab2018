@@ -8,8 +8,6 @@ import java.net.URISyntaxException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.neopragma.legacy.screen.JobApplicant;
-
 /**
  * Automated unit checks for the base version of the JobApplicant application.
  * This version of the code contains a number of code smells that may point to
@@ -163,14 +161,14 @@ public class JobApplicantTest {
 	
 	@Test
 	public void itFindsAddisonTexasBy5DigitZipCode() throws URISyntaxException, IOException {
-		jobApplicant.getAddress().setZipCode("75001");
+		jobApplicant.getAddress().populateUsingZipCode("75001");
 		assertEquals("Addison", jobApplicant.getCity());
 		assertEquals("TX", jobApplicant.getState());
 	}
 	
 	@Test
 	public void itFindsMaranaArizonaBy9DigitZipCode() throws URISyntaxException, IOException {
-		jobApplicant.getAddress().setZipCode("856585578");
+		jobApplicant.getAddress().populateUsingZipCode("856585578");
 		assertEquals("Marana", jobApplicant.getCity());
 		assertEquals("AZ", jobApplicant.getState());
 	}
