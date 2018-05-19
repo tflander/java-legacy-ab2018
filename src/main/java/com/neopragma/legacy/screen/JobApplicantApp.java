@@ -33,7 +33,7 @@ public class JobApplicantApp {
             zipCode = scanner.nextLine();
             jobApplicant.setName(firstName, middleName, lastName);
             jobApplicant.setSsn(ssn);
-            jobApplicant.setAddress(jobApplicant.populateAddressUsingZipCode(zipCode));
+            jobApplicant.setAddress(jobApplicant.buildAddressFromZipCode(zipCode));
             jobApplicant.save();
             System.out.println("saved " + jobApplicant.toString());
         }

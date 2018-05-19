@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 
 public class AddressProvider {
 
-    public Address populateUsingZipCode(String zipCode) throws URISyntaxException, IOException {
+    public Address buildAddressFromZipCode(String zipCode) throws URISyntaxException, IOException {
         Address address = new Address();
         address.setZipCode(zipCode);
         try (CloseableHttpResponse response = getAddressResponse(zipCode)) {

@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Scanner;
 
 /**
  * Job applicant class.
@@ -78,7 +77,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		address = addressProvider.populateUsingZipCode(zipCode);
+		address = addressProvider.buildAddressFromZipCode(zipCode);
 		save();
 	}
 	
@@ -87,8 +86,8 @@ public class JobApplicant {
 		System.out.println("Saving to database: " + formatLastNameFirst());
 	}
 
-    public Address populateAddressUsingZipCode(String zipCode) throws IOException, URISyntaxException {
-        return addressProvider.populateUsingZipCode(zipCode);
+    public Address buildAddressFromZipCode(String zipCode) throws IOException, URISyntaxException {
+        return addressProvider.buildAddressFromZipCode(zipCode);
     }
 
 }

@@ -39,7 +39,7 @@ public class JobApplicantTest {
     @Test
     public void addSetsAddressFromAddressProvider() throws Exception {
         Address address = new Address();
-        when(addressProvider.populateUsingZipCode("zip")).thenReturn(address);
+        when(addressProvider.buildAddressFromZipCode("zip")).thenReturn(address);
         jobApplicant.add("first", "middle", "last", "ssn", "zip");
         assertSame(address, jobApplicant.getAddress());
     }
@@ -53,7 +53,7 @@ public class JobApplicantTest {
     @Test
     public void givenValidSsn_AddSetsSsn() throws Exception {
         Address address = new Address();
-        when(addressProvider.populateUsingZipCode("zip")).thenReturn(address);
+        when(addressProvider.buildAddressFromZipCode("zip")).thenReturn(address);
         jobApplicant.add("first", "middle", "last", "123-45-6789", "zip");
         assertEquals("123456789", jobApplicant.getSsn());
     }
