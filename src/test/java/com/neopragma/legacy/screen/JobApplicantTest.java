@@ -41,7 +41,7 @@ public class JobApplicantTest {
         Address address = new Address();
         when(addressProvider.buildAddressFromZipCode("zip")).thenReturn(address);
         jobApplicant.add("first", "middle", "last", "ssn", "zip");
-        assertSame(address, jobApplicant.getAddress());
+        assertSame(address, jobApplicant.getAddressForTesting());
     }
 
     @Test
