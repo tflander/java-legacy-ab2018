@@ -21,19 +21,7 @@ public class Address {
 
     public void populateUsingZipCode(String zipCode) throws URISyntaxException, IOException {
         this.zipCode = zipCode;
-        // Use a service to look up the city and state based on zip code.
-        // Save the returned city and state if content length is greater than zero.
-        URI uri = new URIBuilder()
-                .setScheme("http")
-                .setHost("www.zip-codes.com")
-                .setPath("/search.asp")
-                .setParameter("fld-zip", this.zipCode)
-                .setParameter("selectTab", "0")
-                .setParameter("srch-type", "city")
-                .build();
-        HttpGet request = new HttpGet(uri);
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        CloseableHttpResponse response = httpclient.execute(request);
+        CloseableHttpResponse response = getAddressResponse();
         try {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
@@ -61,6 +49,20 @@ public class Address {
         } finally {
             response.close();
         }
+    }
+
+    private CloseableHttpResponse getAddressResponse() throws URISyntaxException, IOException {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        URI uri = new URIBuilder()
+                .setScheme("http")
+                .setHost("www.zip-codes.com")
+                .setPath("/search.asp")
+                .setParameter("fld-zip", this.zipCode)
+                .setParameter("selectTab", "0")
+                .setParameter("srch-type", "city")
+                .build();
+        return httpclient.execute(new HttpGet(uri));
+
     }
 
     public String getCity() {
