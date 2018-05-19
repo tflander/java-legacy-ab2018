@@ -56,10 +56,6 @@ public class JobApplicant {
 		}
 	}
 
-	private final String[] specialCases = new String[] {
-	    "219099999", "078051120"
-	};
-
 	public void setSsn(String ssn) {
 		if ( ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})") ) {
   		    this.ssn = ssn.replaceAll("-", "");
@@ -73,26 +69,6 @@ public class JobApplicant {
                 ssn.substring(3, 5) +
                 "-" +
                 ssn.substring(5);
-	}
-
-	public int validateSsn() {
-		if ( !ssn.matches("\\d{9}") ) {
-			return 1;
-		}
-		if ( "000".equals(ssn.substring(0,3)) || 
-			 "666".equals(ssn.substring(0,3)) ||
-			 "9".equals(ssn.substring(0,1)) ) {
-			return 2;
-		}
-		if ( "0000".equals(ssn.substring(5)) ) {
-			return 3;
-		}
-        for (String specialCase : specialCases) {
-            if (ssn.equals(specialCase)) {
-                return 4;
-            }
-        }
-		return 0;
 	}
 
 	public void add(String firstName,
