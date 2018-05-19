@@ -25,23 +25,8 @@ public class Address {
         try {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                long len = entity.getContentLength();
-                BufferedReader rd = new BufferedReader(
-                        new InputStreamReader(response.getEntity().getContent()));
-                StringBuffer result = new StringBuffer();
-                String line = "";
-                while ((line = rd.readLine()) != null) {
-                    result.append(line);
-                }
-                int metaOffset = result.indexOf("<meta ");
-                int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
-                contentOffset += 19;
-                contentOffset = result.indexOf(" - ", contentOffset);
-                contentOffset += 3;
-                int stateOffset = result.indexOf(" ", contentOffset);
-                city = result.substring(contentOffset, stateOffset);
-                stateOffset += 1;
-                state = result.substring(stateOffset, stateOffset+2);
+                StringBuffer result = getRawData(response);
+                parseResultAndUpdateAddress(result);
             } else {
                 city = "";
                 state = "";
@@ -49,6 +34,29 @@ public class Address {
         } finally {
             response.close();
         }
+    }
+
+    private void parseResultAndUpdateAddress(StringBuffer result) {
+        int metaOffset = result.indexOf("<meta ");
+        int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
+        contentOffset += 19;
+        contentOffset = result.indexOf(" - ", contentOffset);
+        contentOffset += 3;
+        int stateOffset = result.indexOf(" ", contentOffset);
+        city = result.substring(contentOffset, stateOffset);
+        stateOffset += 1;
+        state = result.substring(stateOffset, stateOffset+2);
+    }
+
+    private StringBuffer getRawData(CloseableHttpResponse response) throws IOException {
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+        return result;
     }
 
     private CloseableHttpResponse getAddressResponse() throws URISyntaxException, IOException {
