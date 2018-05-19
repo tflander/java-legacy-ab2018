@@ -1,5 +1,7 @@
 package com.neopragma.legacy.screen;
 
+import lombok.Data;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
@@ -7,6 +9,7 @@ import java.util.Scanner;
 /**
  * Job applicant class.
  */
+@Data
 public class JobApplicant {
 	
 	private String firstName = null;
@@ -14,7 +17,8 @@ public class JobApplicant {
 	private String lastName = null;
 	private Address address = new Address();
 	private AddressProvider addressProvider = new AddressProvider();
-	
+	private String ssn;
+
 	public void setName(String firstName, String middleName, String lastName) {
 		this.firstName = firstName == null ? "" : firstName;
 		this.middleName = middleName == null ? "" : middleName;
@@ -51,9 +55,7 @@ public class JobApplicant {
 			return 6;
 		}
 	}
-	
-	private String ssn;
-	
+
 	private final String[] specialCases = new String[] {
 	    "219099999", "078051120"
 	};
@@ -93,14 +95,6 @@ public class JobApplicant {
 		return 0;
 	}
 
-	public String getCity() {
-		return address.getCity();
-	}
-
-	public String getState() {
-		return address.getState();
-	}
-	
 	public void add(String firstName,
 			       String middleName,
 			       String lastName,
@@ -121,27 +115,4 @@ public class JobApplicant {
         return addressProvider.populateUsingZipCode(zipCode);
     }
 
-    public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public String getSsn() {
-        return ssn;
-    }
 }
