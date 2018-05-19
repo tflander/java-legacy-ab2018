@@ -22,7 +22,7 @@ public class JobApplicant {
 	private String firstName = null;
 	private String middleName = null;
 	private String lastName = null;
-	private Address address;
+	private Address address = new Address();
 	
 	public void setName(String firstName, String middleName, String lastName) {
 		this.firstName = firstName == null ? "" : firstName;
