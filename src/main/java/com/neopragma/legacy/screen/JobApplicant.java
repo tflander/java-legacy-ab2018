@@ -13,6 +13,7 @@ public class JobApplicant {
 	private String middleName = null;
 	private String lastName = null;
 	private Address address = new Address();
+	private AddressProvider addressProvider = new AddressProvider();
 	
 	public void setName(String firstName, String middleName, String lastName) {
 		this.firstName = firstName == null ? "" : firstName;
@@ -107,7 +108,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		address = new AddressProvider().populateUsingZipCode(zipCode);
+		address = addressProvider.populateUsingZipCode(zipCode);
 		save();
 	}
 	
@@ -143,16 +144,36 @@ public class JobApplicant {
             zipCode = scanner.nextLine();			
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
-            jobApplicant.setAddress(new AddressProvider().populateUsingZipCode(zipCode));
+            jobApplicant.setAddress(jobApplicant.populateUsingZipCode(zipCode));
             jobApplicant.save();
 		}
 	}
 
-	public Address getAddress() {
+    private Address populateUsingZipCode(String zipCode) throws IOException, URISyntaxException {
+        return addressProvider.populateUsingZipCode(zipCode);
+    }
+
+    public Address getAddress() {
 		return address;
 	}
 
 	public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getSsn() {
+        return ssn;
     }
 }
