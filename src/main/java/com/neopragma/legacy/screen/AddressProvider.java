@@ -18,8 +18,7 @@ public class AddressProvider {
     public Address populateUsingZipCode(String zipCode) throws URISyntaxException, IOException {
         Address address = new Address();
         address.setZipCode(zipCode);
-        CloseableHttpResponse response = getAddressResponse(zipCode);
-        try {
+        try (CloseableHttpResponse response = getAddressResponse(zipCode)) {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 StringBuffer result = getRawData(response);
@@ -28,8 +27,6 @@ public class AddressProvider {
                 address.setCity("");
                 address.setState("");
             }
-        } finally {
-            response.close();
         }
         return address;
     }
@@ -50,7 +47,7 @@ public class AddressProvider {
         BufferedReader rd = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
         StringBuffer result = new StringBuffer();
-        String line = "";
+        String line;
         while ((line = rd.readLine()) != null) {
             result.append(line);
         }

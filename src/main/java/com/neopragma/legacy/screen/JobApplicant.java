@@ -26,9 +26,7 @@ public class JobApplicant {
 		this.firstName = primerNombre == null ? "" : primerNombre;
 		this.middleName = segundoNombre == null ? "" : segundoNombre;
 		if ( primerApellido != null ) {
-  		    StringBuilder sb = new StringBuilder(primerApellido);
-		    sb.append(segundoApellido == null ? null : " " + segundoApellido);
-		    this.lastName = sb.toString();
+            this.lastName = primerApellido + (segundoApellido == null ? null : " " + segundoApellido);
 		} else {
 			this.lastName = "";
 		}
@@ -55,7 +53,7 @@ public class JobApplicant {
 	
 	private String ssn;
 	
-	private String[] specialCases = new String[] {
+	private final String[] specialCases = new String[] {
 	    "219099999", "078051120"
 	};
 
@@ -68,12 +66,10 @@ public class JobApplicant {
 	}
 	
 	public String formatSsn() {
-		StringBuilder sb = new StringBuilder(ssn.substring(0,3));
-		sb.append("-");
-		sb.append(ssn.substring(3,5));
-		sb.append("-");
-		sb.append(ssn.substring(5));
-		return sb.toString();
+        return ssn.substring(0, 3) + "-" +
+                ssn.substring(3, 5) +
+                "-" +
+                ssn.substring(5);
 	}
 
 	public int validateSsn() {
@@ -88,11 +84,11 @@ public class JobApplicant {
 		if ( "0000".equals(ssn.substring(5)) ) {
 			return 3;
 		}
-		for (int i = 0 ; i < specialCases.length ; i++ ) {
-			if ( ssn.equals(specialCases[i]) ) {
-				return 4;
-			}
-		}
+        for (String specialCase : specialCases) {
+            if (ssn.equals(specialCase)) {
+                return 4;
+            }
+        }
 		return 0;
 	}
 
@@ -122,21 +118,19 @@ public class JobApplicant {
 	
 	public static void main(String[] args) throws URISyntaxException, IOException {
 		JobApplicant jobApplicant = new JobApplicant();
-		boolean done = false;
 		Scanner scanner = new Scanner(System.in);
-		String firstName = "";
-		String middleName = "";
-		String lastName = "";
-		String ssn = "";
-		String zipCode = "";
-		while (!done) {
+		String firstName;
+		String middleName;
+		String lastName;
+		String ssn;
+		String zipCode;
+		while (true) {
 			System.out.println("Please enter info about a job candidate or 'quit' to quit");
 			System.out.println("First name?");
             firstName = scanner.nextLine();		
             if (firstName.equals("quit")) {
             	scanner.close();
             	System.out.println("Bye-bye!");
-            	done = true;
             	break;
             }
 			System.out.println("Middle name?");
