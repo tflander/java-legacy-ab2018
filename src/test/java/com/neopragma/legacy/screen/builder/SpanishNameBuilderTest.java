@@ -1,5 +1,8 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.builder;
 
+import com.neopragma.legacy.screen.builder.SpanishNameBuilder;
+import com.neopragma.legacy.screen.domain.Name;
+import com.neopragma.legacy.screen.validator.NameValidator;
 import org.junit.Before;
 import org.junit.Test;
 

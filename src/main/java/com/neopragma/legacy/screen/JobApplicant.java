@@ -1,6 +1,16 @@
 package com.neopragma.legacy.screen;
 
-import com.neopragma.legacy.screen.support.*;
+import com.neopragma.legacy.screen.builder.AddressBuilder;
+import com.neopragma.legacy.screen.builder.DefaultNameBuilder;
+import com.neopragma.legacy.screen.builder.SpanishNameBuilder;
+import com.neopragma.legacy.screen.domain.Address;
+import com.neopragma.legacy.screen.domain.Name;
+import com.neopragma.legacy.screen.formatter.NameFormatter;
+import com.neopragma.legacy.screen.formatter.SocialSecurityNumberFormatter;
+import com.neopragma.legacy.screen.persistance.JobApplicantRepository;
+import com.neopragma.legacy.screen.demo.*;
+import com.neopragma.legacy.screen.validator.NameValidator;
+import com.neopragma.legacy.screen.validator.SocialSecurityNumberValidator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -10,18 +20,18 @@ import java.net.URISyntaxException;
  */
 public class JobApplicant {
 
-    private Address address = new Address();
-    private AddressProvider addressProvider = new AddressProvider();
+    private Address address;
+    private String ssn;
+    private Name name;
+
+    private AddressBuilder addressBuilder = new AddressBuilder();
     private DefaultNameBuilder defaultNameBuilder = new DefaultNameBuilder();
     private JobApplicantRepository jobApplicantRepository = new JobApplicantRepository();
     private SocialSecurityNumberValidator socialSecurityNumberValidator = new SocialSecurityNumberValidator();
     private NameValidator nameValidator = new NameValidator();
-    private String ssn;
-    private Name name;
     private NameFormatter nameFormatter = new NameFormatter();
-
     private SocialSecurityNumberFormatter socialSecurityNumberFormatter = new SocialSecurityNumberFormatter();
-    SpanishNameBuilder spanishNameBuilder = new SpanishNameBuilder();
+    private SpanishNameBuilder spanishNameBuilder = new SpanishNameBuilder();
 
     public void setName(Name name) {
         this.name = name;
@@ -38,7 +48,7 @@ public class JobApplicant {
                     String zipCode) throws URISyntaxException, IOException {
         name = defaultNameBuilder.buildName(firstName, middleName, lastName);
         setSsn(ssn);
-        address = addressProvider.buildAddressFromZipCode(zipCode);
+        address = addressBuilder.buildAddressFromZipCode(zipCode);
         jobApplicantRepository.save(this);
     }
 
@@ -113,7 +123,7 @@ public class JobApplicant {
     }
 
     public void setZipCode(String zipCode) throws URISyntaxException, IOException {
-        this.address = addressProvider.buildAddressFromZipCode(zipCode);
+        this.address = addressBuilder.buildAddressFromZipCode(zipCode);
     }
 
     /**
@@ -142,7 +152,7 @@ public class JobApplicant {
     public String toString() {
         return "JobApplicant{" +
                 "address=" + address +
-                ", addressProvider=" + addressProvider +
+                ", addressBuilder=" + addressBuilder +
                 ", ssn='" + ssn + '\'' +
                 ", name=" + name +
                 '}';

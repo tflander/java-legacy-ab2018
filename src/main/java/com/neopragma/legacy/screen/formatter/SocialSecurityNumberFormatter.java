@@ -1,4 +1,4 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.formatter;
 
 public class SocialSecurityNumberFormatter {
 

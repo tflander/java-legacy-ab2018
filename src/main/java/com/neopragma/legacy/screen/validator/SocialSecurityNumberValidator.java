@@ -1,4 +1,4 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.validator;
 
 public class SocialSecurityNumberValidator {
     public int validate(String ssn) {

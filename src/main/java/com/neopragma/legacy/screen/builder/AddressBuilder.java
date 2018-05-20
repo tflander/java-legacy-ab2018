@@ -1,5 +1,6 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.builder;
 
+import com.neopragma.legacy.screen.domain.Address;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,7 +14,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class AddressProvider {
+public class AddressBuilder {
 
     public Address buildAddressFromZipCode(String zipCode) throws URISyntaxException, IOException {
         Address address = new Address();

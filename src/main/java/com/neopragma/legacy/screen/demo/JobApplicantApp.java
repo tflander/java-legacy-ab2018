@@ -1,6 +1,8 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.demo;
 
 import com.neopragma.legacy.screen.JobApplicant;
+import com.neopragma.legacy.screen.builder.DefaultNameBuilder;
+import com.neopragma.legacy.screen.persistance.JobApplicantRepository;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

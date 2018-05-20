@@ -1,5 +1,6 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.formatter;
 
+import com.neopragma.legacy.screen.formatter.SocialSecurityNumberFormatter;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,6 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.validator;
+
+import com.neopragma.legacy.screen.domain.Name;
 
 public class NameValidator {
 

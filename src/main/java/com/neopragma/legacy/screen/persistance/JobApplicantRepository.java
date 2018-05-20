@@ -1,6 +1,7 @@
-package com.neopragma.legacy.screen.support;
+package com.neopragma.legacy.screen.persistance;
 
 import com.neopragma.legacy.screen.JobApplicant;
+import com.neopragma.legacy.screen.formatter.NameFormatter;
 
 public class JobApplicantRepository {
 
