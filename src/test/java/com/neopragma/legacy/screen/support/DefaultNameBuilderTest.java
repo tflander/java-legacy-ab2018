@@ -40,11 +40,5 @@ public class DefaultNameBuilderTest {
         assertEquals(6, nameValidator.validateName(name));
     }
 
-    @Test
-    public void formatEnglishNameLastNameFirst() {
-        Name name = defaultNameBuilder.buildName("First", "Middle", "Last");
-        assertEquals("Last, First Middle", defaultNameBuilder.formatLastNameFirst(name));
-    }
-
 
 }

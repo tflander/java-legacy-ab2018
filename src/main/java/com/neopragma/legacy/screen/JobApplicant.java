@@ -18,6 +18,7 @@ public class JobApplicant {
     private NameValidator nameValidator = new NameValidator();
     private String ssn;
     private Name name;
+    private NameFormatter nameFormatter = new NameFormatter();
 
     private SocialSecurityNumberFormatter socialSecurityNumberFormatter = new SocialSecurityNumberFormatter();
     SpanishNameBuilder spanishNameBuilder = new SpanishNameBuilder();
@@ -79,9 +80,12 @@ public class JobApplicant {
         name = spanishNameBuilder.buildName(primerNombre, segundoNombre, primerApellido, segundoApellido);
     }
 
-    // TODO: fix and deprecate
+    /**
+     * @deprecated as of release 2.0, replaced by {@link NameFormatter#formatLastNameFirst(Name)}
+     * @return
+     */
     public String formatLastNameFirst() {
-        return defaultNameBuilder.formatLastNameFirst(name);
+        return nameFormatter.formatLastNameFirst(name);
     }
 
     /**
