@@ -93,15 +93,18 @@ public class JobApplicant {
                     String lastName,
                     String ssn,
                     String zipCode) throws URISyntaxException, IOException {
-        setName(firstName, middleName, lastName);
+        name = new DefaultNameBuilder().buildName(firstName, middleName, lastName);
         setSsn(ssn);
         address = addressProvider.buildAddressFromZipCode(zipCode);
-        save();
+        new JobApplicantRepository().save(this);
     }
 
+    /**
+     * @deprecated As of release 2.0, use {@link JobApplicantRepository#save(JobApplicant...)}
+     */
+    @Deprecated
     public void save() {
-        //TODO save information to a database
-        System.out.println("Saving to database: " + formatLastNameFirst());
+        new JobApplicantRepository().save(this);
     }
 
     @Override
@@ -114,6 +117,10 @@ public class JobApplicant {
                 '}';
     }
 
+    /**
+     * @deprecated As of release 2.0, use {@link JobApplicantApp#main(String[])}
+     */
+    @Deprecated
     public static void main(String[] args) throws URISyntaxException, IOException {
         JobApplicantApp.main(args);
     }
@@ -142,4 +149,10 @@ public class JobApplicant {
         return address;
     }
 
+    /**
+     * @since 2.0
+     */
+    public Name getName() {
+        return name;
+    }
 }
