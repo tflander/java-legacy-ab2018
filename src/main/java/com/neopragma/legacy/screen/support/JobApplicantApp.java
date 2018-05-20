@@ -33,10 +33,10 @@ public class JobApplicantApp {
             ssn = scanner.nextLine();
             System.out.println("Zip Code?");
             zipCode = scanner.nextLine();
-            jobApplicant.setName(firstName, middleName, lastName);
+            jobApplicant.setName(new DefaultNameBuilder().buildName(firstName, middleName, lastName));
             jobApplicant.setSsn(ssn);
             jobApplicant.setZipCode(zipCode);
-            jobApplicant.save();
+            new JobApplicantRepository().save(jobApplicant);
 
             System.out.println("saved " + jobApplicant.toString());
         }

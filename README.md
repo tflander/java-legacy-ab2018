@@ -26,4 +26,5 @@ full backward-compatible with the original code.
 - Run the main program often to make sure nothing is broken that was not covered in a test.
 - Run code coverage to see what code isn't tested.
 - Don't trust code coverage.  Code that is green MIGHT be tested.  Review the tests to make sure they are honest.
+- Read "Clean Code", by Uncle Bob Martin
 
