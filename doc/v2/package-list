@@ -1,0 +1,7 @@
+com.neopragma.legacy.screen
+com.neopragma.legacy.screen.builder
+com.neopragma.legacy.screen.demo
+com.neopragma.legacy.screen.domain
+com.neopragma.legacy.screen.formatter
+com.neopragma.legacy.screen.persistance
+com.neopragma.legacy.screen.validator
