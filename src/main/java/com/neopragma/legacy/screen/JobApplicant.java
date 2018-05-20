@@ -14,35 +14,40 @@ public class JobApplicant {
     private AddressProvider addressProvider = new AddressProvider();
     private String ssn;
     private Name name;
+
     private SocialSecurityNumberFormatter socialSecurityNumberFormatter = new SocialSecurityNumberFormatter();
 
-    public void setName(String firstName, String middleName, String lastName) {
-        name = new DefaultNameBuilder().setName(firstName, middleName, lastName);
+    public void setName(Name name) {
+        this.name = name;
     }
 
+    /**
+     * @deprecated As of release 2.0, replaced by {@link #setName(Name)}
+     */
+    @Deprecated
+    public void setName(String firstName, String middleName, String lastName) {
+        name = new DefaultNameBuilder().buildName(firstName, middleName, lastName);
+    }
+
+    /**
+     * @deprecated As of release 2.0, replaced by {@link #setName(Name)}
+     */
+    @Deprecated
     public void setSpanishName(String primerNombre, String segundoNombre,
                                String primerApellido, String segundoApellido) {
-        String lastName;
-        if (primerApellido != null) {
-            lastName = primerApellido + (segundoApellido == null ? null : " " + segundoApellido);
-        } else {
-            lastName = "";
-        }
-
-        name = Name.builder()
-                .firstName(primerNombre == null ? "" : primerNombre)
-                .middleName(segundoNombre == null ? "" : segundoNombre)
-                .lastName(lastName)
-                .build();
-
+        name = new SpanishNameBuilder().buildName(primerNombre, segundoNombre, primerApellido, segundoApellido);
     }
 
     public String formatLastNameFirst() {
         return new DefaultNameBuilder().formatLastNameFirst(name);
     }
 
+    /**
+     * @deprecated As of release 2.0, replaced by {@link NameValidator#validateName(Name)}
+     */
+    @Deprecated
     public int validateName() {
-        return new DefaultNameBuilder().validateName(name);
+        return new NameValidator().validateName(name);
     }
 
     public void setSsn(String ssn) {

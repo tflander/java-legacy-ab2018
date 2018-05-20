@@ -64,34 +64,4 @@ public class JobApplicantTest {
         assertEquals("123456789", jobApplicant.getSsn());
     }
 
-    @Test
-    public void completeSpanishNameProvided() {
-        jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", "PrimerApellido", "SegundoApellido");
-        assertEquals(0, jobApplicant.validateName());
-    }
-
-    @Test
-    public void spanishNameWithOneFirstNameProvided() {
-        jobApplicant.setSpanishName("PrimerNombre", null, "PrimerApellido", "SegundoApellido");
-        assertEquals(0, jobApplicant.validateName());
-    }
-
-    @Test
-    public void spanishNameWithOneLastNameProvided() {
-        jobApplicant.setSpanishName("PrimerNombre", null, "PrimerApellido", null);
-        assertEquals(0, jobApplicant.validateName());
-    }
-
-    @Test
-    public void spanishNameWithNoFirstNameProvided() {
-        jobApplicant.setSpanishName(null, null, "PrimerApellido", null);
-        assertEquals(6, jobApplicant.validateName());
-    }
-
-    @Test
-    public void spanishNameWithNoLastNameProvided() {
-        jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", null, null);
-        assertEquals(6, jobApplicant.validateName());
-    }
-
 }
