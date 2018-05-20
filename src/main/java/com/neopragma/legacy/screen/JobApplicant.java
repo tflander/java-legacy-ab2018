@@ -115,10 +115,6 @@ public class JobApplicant {
         return addressProvider.buildAddressFromZipCode(zipCode);
     }
 
-    protected void setAddress(Address address) {
-        this.address = address;
-    }
-
     protected String getFirstName() {
         return name.getFirstName();
     }
@@ -135,7 +131,11 @@ public class JobApplicant {
         return ssn;
     }
 
-    protected Address getAddressForTesting() {
-        return address;
+    public String getZipCode() {
+        return address.getZipCode();
     }
+
+//    protected Address getAddressForTesting() {
+//        return address;
+//    }
 }
