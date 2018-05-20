@@ -14,6 +14,7 @@ public class JobApplicant {
     private AddressProvider addressProvider = new AddressProvider();
     private String ssn;
     private Name name;
+    private SocialSecurityNumberFormatter socialSecurityNumberFormatter = new SocialSecurityNumberFormatter();
 
     public void setName(String firstName, String middleName, String lastName) {
         name = new DefaultNameBuilder().setName(firstName, middleName, lastName);
@@ -45,19 +46,15 @@ public class JobApplicant {
     }
 
     public void setSsn(String ssn) {
-        if (ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})")) {
-            this.ssn = ssn.replaceAll("-", "");
-        } else {
-            this.ssn = "";
-        }
+        this.ssn = socialSecurityNumberFormatter.removeDashes(ssn);
     }
 
     /**
-     *  @deprecated  As of release 2.0, replaced by {@link SocialSecurityNumberFormatter#formatSsn(String)}
+     *  @deprecated  As of release 2.0, replaced by {@link SocialSecurityNumberFormatter#addDashes(String)}
      */
     @Deprecated
     public String formatSsn() {
-        return new SocialSecurityNumberFormatter().formatSsn(ssn);
+        return socialSecurityNumberFormatter.addDashes(ssn);
     }
 
     /**
@@ -72,10 +69,16 @@ public class JobApplicant {
         this.address = addressProvider.buildAddressFromZipCode(zipCode);
     }
 
+    /**
+     * @deprecated As of release 2.0, replaced by {@link #getAddress()}
+     */
     public String getCity() {
         return address.getCity();
     }
 
+    /**
+     * @deprecated As of release 2.0, replaced by {@link #getAddress()}
+     */
     public String getState() {
         return address.getState();
     }
@@ -126,8 +129,12 @@ public class JobApplicant {
         return ssn;
     }
 
-    public String getZipCode() {
-        return address.getZipCode();
+    /**
+     * @since 2.0
+     * @return address for job applicant
+     */
+    public Address getAddress() {
+        return address;
     }
 
 }

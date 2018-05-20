@@ -16,7 +16,7 @@ public class SocialSecurityNumberFormatterTest {
 
     @Test
     public void ssnFormattingTest() {
-        assertEquals("123-45-6789", socialSecurityNumberFormatter.formatSsn("123456789"));
+        assertEquals("123-45-6789", socialSecurityNumberFormatter.addDashes("123456789"));
     }
 
 }

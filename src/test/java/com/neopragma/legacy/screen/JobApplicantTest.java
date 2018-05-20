@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.when;
 
 /**
@@ -46,9 +47,7 @@ public class JobApplicantTest {
         Address address = new Address();
         when(addressProvider.buildAddressFromZipCode("zip")).thenReturn(address);
         jobApplicant.add("first", "middle", "last", "ssn", "zip");
-        assertEquals(jobApplicant.getCity(), address.getCity());
-        assertEquals(jobApplicant.getState(), address.getState());
-        assertEquals(jobApplicant.getZipCode(), address.getZipCode());
+        assertSame(address, jobApplicant.getAddress());
     }
 
     @Test
