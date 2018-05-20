@@ -111,10 +111,6 @@ public class JobApplicant {
         JobApplicantApp.main(args);
     }
 
-    protected Address buildAddressFromZipCode(String zipCode) throws IOException, URISyntaxException {
-        return addressProvider.buildAddressFromZipCode(zipCode);
-    }
-
     protected String getFirstName() {
         return name.getFirstName();
     }
@@ -135,7 +131,4 @@ public class JobApplicant {
         return address.getZipCode();
     }
 
-//    protected Address getAddressForTesting() {
-//        return address;
-//    }
 }
