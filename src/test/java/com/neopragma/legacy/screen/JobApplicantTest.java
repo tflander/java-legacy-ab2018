@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.when;
 
 /**
@@ -20,6 +19,10 @@ import static org.mockito.Mockito.when;
  * @author neopragma
  * @version 1.0.0
  * @since 1.7
+ *
+ * @author todd flanders
+ * @version 2.0.0
+ * @since 2.0
  */
 @RunWith(MockitoJUnitRunner.class)
 public class JobApplicantTest {
@@ -90,12 +93,6 @@ public class JobApplicantTest {
     public void spanishNameWithNoLastNameProvided() {
         jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", null, null);
         assertEquals(6, jobApplicant.validateName());
-    }
-
-    @Test
-    public void ssnFormattingTest() {
-        jobApplicant.setSsn("123456789");
-        assertEquals("123-45-6789", jobApplicant.formatSsn());
     }
 
 }

@@ -52,17 +52,16 @@ public class JobApplicant {
         }
     }
 
+    /**
+     *  @deprecated  As of release 2.0, replaced by {@link SocialSecurityNumberFormatter#formatSsn(String)}
+     */
+    @Deprecated
     public String formatSsn() {
-        return ssn.substring(0, 3) + "-" +
-                ssn.substring(3, 5) +
-                "-" +
-                ssn.substring(5);
+        return new SocialSecurityNumberFormatter().formatSsn(ssn);
     }
 
     /**
-     *  * @deprecated  As of release 2.0, replaced by TODO Create Link Annotation
-
-     * @return
+     *  @deprecated  As of release 2.0, replaced by {@link SocialSecurityNumberValidator#validate(String)}
      */
     @Deprecated
     public int validateSsn() {
