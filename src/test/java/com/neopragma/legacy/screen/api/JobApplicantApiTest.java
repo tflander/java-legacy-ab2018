@@ -5,7 +5,6 @@ import com.neopragma.legacy.screen.builder.AddressBuilder;
 import com.neopragma.legacy.screen.builder.JobApplicantApi;
 import com.neopragma.legacy.screen.domain.Address;
 import com.neopragma.legacy.screen.domain.Name;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

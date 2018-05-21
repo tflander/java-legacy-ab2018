@@ -1,7 +1,9 @@
 package com.neopragma.legacy.screen.demo;
 
 import com.neopragma.legacy.screen.JobApplicant;
+import com.neopragma.legacy.screen.builder.AddressBuilder;
 import com.neopragma.legacy.screen.builder.DefaultNameBuilder;
+import com.neopragma.legacy.screen.domain.Address;
 import com.neopragma.legacy.screen.persistance.JobApplicantRepository;
 
 import java.io.IOException;
@@ -37,7 +39,8 @@ public class JobApplicantApp {
             zipCode = scanner.nextLine();
             jobApplicant.setName(new DefaultNameBuilder().buildName(firstName, middleName, lastName));
             jobApplicant.setSsn(ssn);
-            jobApplicant.setZipCode(zipCode);
+            Address address = new AddressBuilder().buildAddressFromZipCode(zipCode);
+            jobApplicant.setAddress(address);
             new JobApplicantRepository().save(jobApplicant);
 
             System.out.println("saved " + jobApplicant.toString());
