@@ -2,6 +2,7 @@ package com.neopragma.legacy.screen;
 
 import com.neopragma.legacy.screen.builder.AddressBuilder;
 import com.neopragma.legacy.screen.builder.DefaultNameBuilder;
+import com.neopragma.legacy.screen.builder.JobApplicantApi;
 import com.neopragma.legacy.screen.builder.SpanishNameBuilder;
 import com.neopragma.legacy.screen.domain.Address;
 import com.neopragma.legacy.screen.domain.Name;
@@ -24,32 +25,39 @@ public class JobApplicant {
     private String ssn;
     private Name name;
 
-    private AddressBuilder addressBuilder = new AddressBuilder();
-    private DefaultNameBuilder defaultNameBuilder = new DefaultNameBuilder();
-    private JobApplicantRepository jobApplicantRepository = new JobApplicantRepository();
-    private SocialSecurityNumberValidator socialSecurityNumberValidator = new SocialSecurityNumberValidator();
-    private NameValidator nameValidator = new NameValidator();
-    private NameFormatter nameFormatter = new NameFormatter();
-    private SocialSecurityNumberFormatter socialSecurityNumberFormatter = new SocialSecurityNumberFormatter();
-    private SpanishNameBuilder spanishNameBuilder = new SpanishNameBuilder();
+    private final AddressBuilder addressBuilder = new AddressBuilder();
+    private final DefaultNameBuilder defaultNameBuilder = new DefaultNameBuilder();
+    private final JobApplicantRepository jobApplicantRepository = new JobApplicantRepository();
+    private final SocialSecurityNumberValidator socialSecurityNumberValidator = new SocialSecurityNumberValidator();
+    private final NameValidator nameValidator = new NameValidator();
+    private final NameFormatter nameFormatter = new NameFormatter();
+    private final SocialSecurityNumberFormatter socialSecurityNumberFormatter = new SocialSecurityNumberFormatter();
+    private final SpanishNameBuilder spanishNameBuilder = new SpanishNameBuilder();
+    private final JobApplicantApi jobApplicantApi = new JobApplicantApi();
 
-    public void setName(Name name) {
-        this.name = name;
-    }
-
-    public void setSsn(String ssn) {
-        this.ssn = socialSecurityNumberFormatter.removeDashes(ssn);
-    }
-
+    /**
+     * @deprecated as of Release 2.0, use {@link com.neopragma.legacy.screen.builder.JobApplicantApi#createJobApplicant(String, String, String, String, String)}
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param ssn
+     * @param zipCode
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     public void add(String firstName,
                     String middleName,
                     String lastName,
                     String ssn,
                     String zipCode) throws URISyntaxException, IOException {
-        name = defaultNameBuilder.buildName(firstName, middleName, lastName);
-        setSsn(ssn);
-        address = addressBuilder.buildAddressFromZipCode(zipCode);
-        jobApplicantRepository.save(this);
+        JobApplicant jobApplicant = jobApplicantApi.createJobApplicant(firstName, middleName, lastName, ssn, zipCode);
+        this.name = jobApplicant.getName();
+        this.ssn = jobApplicant.getSsn();
+        this.address = jobApplicant.getAddress();
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = socialSecurityNumberFormatter.removeDashes(ssn);
     }
 
     /**
@@ -69,8 +77,22 @@ public class JobApplicant {
     /**
      * @since 2.0
      */
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    /**
+     * @since 2.0
+     */
     public Name getName() {
         return name;
+    }
+
+    /**
+     * @since 2.0
+     */
+    public void setName(Name name) {
+        this.name = name;
     }
 
     /**
@@ -122,6 +144,13 @@ public class JobApplicant {
         return socialSecurityNumberValidator.validate(this.ssn);
     }
 
+    /**
+     * @deprecated As of release 2.0, replaced by {@link AddressBuilder#buildAddressFromZipCode(String)}
+     * @param zipCode
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Deprecated
     public void setZipCode(String zipCode) throws URISyntaxException, IOException {
         this.address = addressBuilder.buildAddressFromZipCode(zipCode);
     }

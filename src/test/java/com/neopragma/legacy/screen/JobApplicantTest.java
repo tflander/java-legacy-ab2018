@@ -1,15 +1,21 @@
 package com.neopragma.legacy.screen;
 
-import com.neopragma.legacy.screen.domain.Address;
 import com.neopragma.legacy.screen.builder.AddressBuilder;
+import com.neopragma.legacy.screen.builder.DefaultNameBuilder;
+import com.neopragma.legacy.screen.builder.JobApplicantApi;
+import com.neopragma.legacy.screen.builder.SpanishNameBuilder;
+import com.neopragma.legacy.screen.formatter.NameFormatter;
+import com.neopragma.legacy.screen.formatter.SocialSecurityNumberFormatter;
+import com.neopragma.legacy.screen.persistance.JobApplicantRepository;
+import com.neopragma.legacy.screen.validator.NameValidator;
+import com.neopragma.legacy.screen.validator.SocialSecurityNumberValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -18,12 +24,9 @@ import static org.mockito.Mockito.when;
  * potential improvements in the design of the code.
  *
  * @author neopragma
- * @version 1.0.0
- * @since 1.7
- *
  * @author todd flanders
  * @version 2.0.0
- * @since 2.0
+ * @since 1.7
  */
 @RunWith(MockitoJUnitRunner.class)
 public class JobApplicantTest {
@@ -32,36 +35,85 @@ public class JobApplicantTest {
     private JobApplicant jobApplicant = new JobApplicant();
 
     @Mock
-    AddressBuilder addressBuilder;
+    private AddressBuilder addressBuilder;
+
+    @Mock
+    private DefaultNameBuilder defaultNameBuilder;
+
+    @Mock
+    private JobApplicantRepository jobApplicantRepository;
+
+    @Mock
+    private SocialSecurityNumberValidator socialSecurityNumberValidator;
+
+    @Mock
+    private NameValidator nameValidator;
+
+    @Mock
+    private NameFormatter nameFormatter;
+
+    @Mock
+    private SocialSecurityNumberFormatter socialSecurityNumberFormatter;
+
+    @Mock
+    private SpanishNameBuilder spanishNameBuilder;
+
+    @Mock
+    private JobApplicantApi jobApplicantApi;
 
     @Test
-    public void addSetsName() throws Exception {
+    public void deprecatedAddIsFacade() throws Exception {
+        when(jobApplicantApi.createJobApplicant("first", "middle", "last", "ssn", "zip")).thenReturn(jobApplicant);
         jobApplicant.add("first", "middle", "last", "ssn", "zip");
-        assertEquals("first", jobApplicant.getFirstName());
-        assertEquals("last", jobApplicant.getLastName());
-        assertEquals("middle", jobApplicant.getMiddleName());
+        verify(jobApplicantApi).createJobApplicant("first", "middle", "last", "ssn", "zip");
     }
 
     @Test
-    public void addSetsAddressFromAddressProvider() throws Exception {
-        Address address = new Address();
-        when(addressBuilder.buildAddressFromZipCode("zip")).thenReturn(address);
-        jobApplicant.add("first", "middle", "last", "ssn", "zip");
-        assertSame(address, jobApplicant.getAddress());
+    public void deprecatedSetNameIsFacade() throws Exception {
+        jobApplicant.setName("first", "middle", "last");
+        verify(defaultNameBuilder).buildName("first", "middle", "last");
     }
 
     @Test
-    public void givenInvalidSsn_AddSetsEmptySsn() throws Exception {
-        jobApplicant.add("first", "middle", "last", "ssn", "zip");
-        assertEquals("", jobApplicant.getSsn());
+    public void deprecatedSetSpanishNameIsFacade() throws Exception {
+        jobApplicant.setSpanishName("firstFirst", "secondFirst", "firstLast", "secondLast");
+        verify(spanishNameBuilder).buildName("firstFirst", "secondFirst", "firstLast", "secondLast");
     }
 
     @Test
-    public void givenValidSsn_AddSetsSsn() throws Exception {
-        Address address = new Address();
-        when(addressBuilder.buildAddressFromZipCode("zip")).thenReturn(address);
-        jobApplicant.add("first", "middle", "last", "123-45-6789", "zip");
-        assertEquals("123456789", jobApplicant.getSsn());
+    public void deprecatedFormatLastNameFirstIsFacade() throws Exception {
+        jobApplicant.formatLastNameFirst();
+        verify(nameFormatter).formatLastNameFirst(jobApplicant.getName());
+    }
+
+    @Test
+    public void deprecatedValidateNameIsFacade() throws Exception {
+        jobApplicant.validateName();
+        verify(nameValidator).validateName(jobApplicant.getName());
+    }
+
+    @Test
+    public void deprecatedFormatSsnIsFacade() throws Exception {
+        jobApplicant.formatSsn();
+        verify(socialSecurityNumberFormatter).addDashes(jobApplicant.getSsn());
+    }
+
+    @Test
+    public void deprecatedValidateSsnIsFacade() throws Exception {
+        jobApplicant.validateSsn();
+        verify(socialSecurityNumberValidator).validate(jobApplicant.getSsn());
+    }
+
+    @Test
+    public void deprecatedSetZipCodeIsFacade() throws Exception {
+        jobApplicant.setZipCode("zip");
+        verify(addressBuilder).buildAddressFromZipCode("zip");
+    }
+
+    @Test
+    public void deprecadedSaveIsFacade() throws Exception {
+        jobApplicant.save();
+        verify(jobApplicantRepository).save(jobApplicant);
     }
 
 }
